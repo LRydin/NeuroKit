@@ -22,11 +22,11 @@ def fractal_dfa(signal, windows="default", overlap=True, integrate=True, order=1
     windows : list
         A list containing the lengths of the windows (number of data points in each subseries). Also
         referred to as 'lag' or 'scale'. If 'default', will set it to a logarithmic scale (so that each
-        window scale hase the same weight) with a minimum of 4 and maximum of a tenth of the length
-        (to have more than 10 windows to calculate the average fluctuation).
+        window scale has the same weight) with a minimum of ``order + 2`` and maximum of a tenth of the
+        length (to have more than 10 windows to calculate the average fluctuation).
     overlap : bool
-        Defaults to True, where the windows will have a 50% overlap
-        with each other, otherwise non-overlapping windows will be used.
+        Defaults to True, where the windows will have a 50% overlap with each other, otherwise
+        non-overlapping windows will be used.
     integrate : bool
         It is common practice to convert the signal to a random walk (i.e., detrend and integrate,
         which corresponds to the signal 'profile'). Note that it leads to the flattening of the signal,
@@ -34,14 +34,14 @@ def fractal_dfa(signal, windows="default", overlap=True, integrate=True, order=1
         strongly anticorrelated signals, this transformation should be applied two times (i.e., provide
         ``np.cumsum(signal - np.mean(signal))`` instead of ``signal``).
     order : int
-        The order of the polynoiam trend, 1 for the linear trend.
+        The order of the polynomial trend, ``1`` for the linear trend.
     multifractal : bool
-        If true, compute Multifractal Detrended Fluctuation Analysis (MFDFA), in which case the argument
-        ```q`` is taken into account.
+        If true, compute Multifractal Detrended Fluctuation Analysis (MFDFA), in which case the
+        argument ``q`` is taken into account.
     q : list
         The sequence of fractal exponents when ``multifractal=True``. Must be a sequence between -10
-        and 10 (nota that zero will be removed, since the code does not converge there). Setting
-        q = 2 (default) gives a result close to a standard DFA. For instance, Ihlen (2012) usese ``
+        and 10 (note that zero will be removed, since the code does not converge there). Setting
+        q = 2 (default) gives a result close to a standard DFA. For instance, Ihlen (2012) uses ``
         q=[-5, -3, -1, 0, 1, 3, 5]``.
     show : bool
         Visualise the trend between the window size and the fluctuations.
@@ -64,14 +64,23 @@ def fractal_dfa(signal, windows="default", overlap=True, integrate=True, order=1
 
     References
     -----------
-    - Ihlen, E. A. F. E. (2012). Introduction to multifractal detrended fluctuation analysis in Matlab.
+    - Ihlen, E. A. F. (2012). Introduction to multifractal detrended fluctuation analysis in Matlab.
       Frontiers in physiology, 3, 141.
 
     - Hardstone, R., Poil, S. S., Schiavone, G., Jansen, R., Nikulin, V. V., Mansvelder, H. D., &
       Linkenkaer-Hansen, K. (2012). Detrended fluctuation analysis: a scale-free view on neuronal
       oscillations. Frontiers in physiology, 3, 450.
 
+    - Peng, C.-K., Buldyrev. S. V., Havlin, S., Simons, M., Stanley, H. E., & Goldberger, A. L.
+      (1994) Mosaic organization of DNA nucleotides. Physical Review E, 49(2), 1685–1689
+
+    - Kantelhardt, J. W., Zschiegner, S. A., Koscielny-Bunde, E., Havlin, S., Bunde, A., Stanley,
+      H. E. (2002). Multifractal detrended fluctuation analysis of nonstationary time series.
+      Physica A, 316(1-4), 87–114.
+
     - `nolds <https://github.com/CSchoel/nolds/>`_
+
+    - `MFDFA <https://github.com/LRydin/MFDFA/>`_
 
     - `Youtube introduction <https://www.youtube.com/watch?v=o0LndP2OlUI>`_
 
